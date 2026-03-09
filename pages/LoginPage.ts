@@ -27,6 +27,4 @@ export class LoginPage {
   async verifyLoginSuccess() {
     await this.page.waitForURL("https://www.saucedemo.com/inventory.html");
   }
-
-
 }
