@@ -1,6 +1,5 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/auth.fixtures";
-import { InventoryPage } from "../pages/inventory.page";
 
 test.describe("Inventory page", () => {
   test("should display products with name, description and price", async ({
