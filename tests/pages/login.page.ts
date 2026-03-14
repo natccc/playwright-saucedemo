@@ -8,23 +8,23 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.username = page.locator("#user-name");
-    this.password = page.locator("#password");
-    this.loginButton = page.locator("#login-button");
-    this.errorMessage = page.locator("[data-test='error']");
+    this.username = page.getByTestId("username");
+    this.password = page.getByTestId("password");
+    this.loginButton = page.getByRole("button", {name: "Login"})
+    this.errorMessage = page.getByTestId("error");
   }
 
   async gotoLoginPage() {
     await this.page.goto("https://www.saucedemo.com");
   }
 
-  async login(user: string, pass: string) {
+  async login(user: string, password: string) {
     await this.username.fill(user);
-    await this.password.fill(pass);
+    await this.password.fill(password);
     await this.loginButton.click();
   }
 
   async verifyLoginSuccess() {
-    await this.page.waitForURL("https://www.saucedemo.com/inventory.html");
+    await this.page.waitForURL("**/inventory.html");
   }
 }
