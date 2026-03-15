@@ -18,23 +18,25 @@ The goal is to build maintainable, scalable automated tests using industry-stand
 ## Project Structure
 
 ```
+tests/
+├── fixtures/       # Custom Playwright fixtures (e.g. authenticated session)
+├── helpers/        # Test data constants
 ├── pages/          # Page Object classes
-├── tests/          # Test specs
-├── .github/
-│   └── workflows/  # GitHub Actions CI configuration
-├── playwright.config.ts
-└── package.json
+└── specs/          # Test specs
+.github/
+└── workflows/      # GitHub Actions CI configuration
+playwright.config.ts
+package.json
 ```
 
 ## Test Coverage
 
-| Area                            | Status         |
-| ------------------------------- | -------------- |
-| Login — valid credentials       | ✅             |
-| Login — invalid credentials     | ✅             |
-| Login — locked out user         | ✅             |
-| Login — empty fields validation | ✅             |
-| Add to cart                     | 🚧 In progress |
+| Page           | Status |
+| -------------- | ------ |
+| Login          | ✅     |
+| Inventory      | ✅     |
+| Product Detail | ✅     |
+| Cart           | ✅     |
 
 ## CI/CD
 
@@ -63,7 +65,8 @@ npx playwright show-report
 
 ## What I'm Learning
 
-- Structuring tests using **Page Object Model** to separate page interactions from test logic
+- Structuring tests using **Page Object Model** with a `BasePage` for shared components
+- Using **custom fixtures** to handle authenticated state across tests
 - Writing maintainable, reusable test code in **TypeScript**
 - Setting up **CI pipelines** with GitHub Actions to run tests on every push
-- Applying test design principles such as boundary testing and negative path coverage
+- Enforcing code formatting with **Prettier** via Husky pre-commit hooks
