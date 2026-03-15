@@ -1,44 +1,60 @@
 import { Page, Locator } from "@playwright/test";
-export class InventoryPage {
-    readonly page: Page;
-    readonly inventoryItems: Locator;
-    readonly shoppingCartBadge: Locator;
-    readonly sortDropdown: Locator
+import { BasePage } from "./base.page";
+import { PRODUCTS } from "../helpers/test-data";
 
-    constructor(page: Page) {
-        this.page = page;
-        this.inventoryItems = page.getByTestId("inventory-item");
-        this.shoppingCartBadge = page.getByTestId("shopping-cart-badge");
-        this.sortDropdown = page.getByTestId("product-sort-container")
-    }
+export class InventoryPage extends BasePage {
+  readonly page: Page;
+  readonly inventoryItems: Locator;
+  readonly sortDropdown: Locator;
 
-    async addToCartByIndex(index: number) {
-        await this.inventoryItems
-            .nth(index)
-            .getByRole("button", { name: "Add to cart" })
-            .click();
-    }
-    async removeItemByIndex(index: number) {
-        await this.inventoryItems.nth(index).getByRole("button", { name: "Remove" })
-            .click()
-    }
-    
-    async sortBy(option: 'az' | 'za' | 'lohi' | 'hilo') {
-        await this.sortDropdown.selectOption(option)
-    }
+  constructor(page: Page) {
+    super(page);
+    this.page = page;
+    this.inventoryItems = page.getByTestId("inventory-item");
+    this.sortDropdown = page.getByTestId("product-sort-container");
+  }
 
-    async getItemNames(): Promise<string[]> {
-        return await this.inventoryItems.getByTestId("inventory-item-name").allInnerTexts()
-    }
+  async addToCartByIndex(index: number) {
+    await this.inventoryItems
+      .nth(index)
+      .getByRole("button", { name: "Add to cart" })
+      .click();
+  }
+  async removeItemByIndex(index: number) {
+    await this.inventoryItems
+      .nth(index)
+      .getByRole("button", { name: "Remove" })
+      .click();
+  }
 
-    async getItemPrices(): Promise<number[]> {
-        const priceTexts = await this.inventoryItems.getByTestId("inventory-item-price").allInnerTexts()
-        return priceTexts.map(p => parseFloat(p.replace("$", "")))
-    }
+  async addToCartByName(name: string) {
+    await this.inventoryItems
+      .filter({ hasText: name })
+      .getByRole("button", { name: "Add to cart" })
+      .click();
+  }
 
-    async clickFirstItem() {
-        const name = await this.inventoryItems.first().getByTestId("inventory-item-name").innerText();
-        await this.inventoryItems.first().getByTestId(/title-link/).click()
-        return name;
-    }
+  async sortBy(option: "az" | "za" | "lohi" | "hilo") {
+    await this.sortDropdown.selectOption(option);
+  }
+
+  async getItemNames(): Promise<string[]> {
+    return await this.inventoryItems
+      .getByTestId("inventory-item-name")
+      .allInnerTexts();
+  }
+
+  async getItemPrices(): Promise<number[]> {
+    const priceTexts = await this.inventoryItems
+      .getByTestId("inventory-item-price")
+      .allInnerTexts();
+    return priceTexts.map((p) => parseFloat(p.replace("$", "")));
+  }
+
+  async clickItemName(name: string) {
+    await this.inventoryItems
+      .getByTestId("inventory-item-name")
+      .filter({ hasText: name })
+      .click();
+  }
 }

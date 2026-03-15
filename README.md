@@ -28,17 +28,17 @@ The goal is to build maintainable, scalable automated tests using industry-stand
 
 ## Test Coverage
 
-| Area | Status |
-|------|--------|
-| Login — valid credentials | ✅ |
-| Login — invalid credentials | ✅ |
-| Login — locked out user | ✅ |
-| Login — empty fields validation | ✅ |
-| Add to cart | 🚧 In progress |
+| Area                            | Status         |
+| ------------------------------- | -------------- |
+| Login — valid credentials       | ✅             |
+| Login — invalid credentials     | ✅             |
+| Login — locked out user         | ✅             |
+| Login — empty fields validation | ✅             |
+| Add to cart                     | 🚧 In progress |
 
 ## CI/CD
 
-Tests run automatically via GitHub Actions on every push to `main`. 
+Tests run automatically via GitHub Actions on every push to `main`.
 
 ![CI](https://github.com/natccc/playwright-saucedemo/actions/workflows/playwright.yml/badge.svg)
 

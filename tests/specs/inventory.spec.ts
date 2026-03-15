@@ -53,13 +53,11 @@ test.describe("Inventory page", () => {
     const sorted = [...prices].sort((a, b) => a - b);
     expect(prices).toEqual(sorted);
   });
-    
-    test("should sort items by price high to low", async ({
-      inventoryPage,
-    }) => {
-      await inventoryPage.sortBy("hilo");
-      const prices = await inventoryPage.getItemPrices();
-      const sorted = [...prices].sort((a, b) => b - a);
-      expect(prices).toEqual(sorted);
-    });
+
+  test("should sort items by price high to low", async ({ inventoryPage }) => {
+    await inventoryPage.sortBy("hilo");
+    const prices = await inventoryPage.getItemPrices();
+    const sorted = [...prices].sort((a, b) => b - a);
+    expect(prices).toEqual(sorted);
+  });
 });

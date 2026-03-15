@@ -10,7 +10,7 @@ export class LoginPage {
     this.page = page;
     this.username = page.getByTestId("username");
     this.password = page.getByTestId("password");
-    this.loginButton = page.getByRole("button", {name: "Login"})
+    this.loginButton = page.getByRole("button", { name: "Login" });
     this.errorMessage = page.getByTestId("error");
   }
 
