@@ -6,7 +6,7 @@ test.describe("Login page", () => {
   test("should be able to login with standard user", async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();
-    await loginPage.login(USERS.standard.username, USERS.standard.password);
+    await loginPage.loginAs(USERS.standard.username, USERS.standard.password);
     await loginPage.verifyLoginSuccess();
   });
 
@@ -15,7 +15,7 @@ test.describe("Login page", () => {
   }) => {
     const loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();
-    await loginPage.login(USERS.locked.username, USERS.locked.password);
+    await loginPage.loginAs(USERS.locked.username, USERS.locked.password);
     await expect(loginPage.errorMessage).toContainText(
       "Epic sadface: Sorry, this user has been locked out.",
     );
@@ -26,7 +26,7 @@ test.describe("Login page", () => {
   }) => {
     const loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();
-    await loginPage.login(USERS.locked.username, "wrong_password");
+    await loginPage.loginAs(USERS.locked.username, "wrong_password");
     await expect(loginPage.errorMessage).toContainText(
       "Epic sadface: Username and password do not match any user in this service",
     );
@@ -37,7 +37,7 @@ test.describe("Login page", () => {
   }) => {
     const loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();
-    await loginPage.login("", "123");
+    await loginPage.loginAs("", "123");
     await expect(loginPage.errorMessage).toContainText(
       "Epic sadface: Username is required",
     );
@@ -46,7 +46,7 @@ test.describe("Login page", () => {
   test("should not be able to login with empty password", async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();
-    await loginPage.login("123", "");
+    await loginPage.loginAs("123", "");
     await expect(loginPage.errorMessage).toContainText(
       "Epic sadface: Password is required",
     );

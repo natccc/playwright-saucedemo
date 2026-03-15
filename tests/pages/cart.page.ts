@@ -1,7 +1,7 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import { BasePage } from "./base.page";
 
-export class Cart extends BasePage {
+export class CartPage extends BasePage {
   readonly page: Page;
   readonly continueShoppingBtn: Locator;
   readonly checkoutBtn: Locator;
@@ -17,12 +17,13 @@ export class Cart extends BasePage {
     this.cartItems = page.getByTestId("inventory-item");
   }
 
-  async getItemContainer(name: string) {
-    return this.page.getByTestId("inventory-item").filter({ hasText: name });
+  async assertItemVisible(name: string) {
+    await expect(this.cartItems.filter({ hasText: name })).toBeVisible();
   }
 
   async removeItem(name: string) {
-    await (await this.getItemContainer(name))
+    await this.cartItems
+      .filter({ hasText: name })
       .getByRole("button", { name: "Remove" })
       .click();
   }
@@ -33,5 +34,9 @@ export class Cart extends BasePage {
 
   async getNumberOfItems() {
     return await this.cartItems.count();
+  }
+
+  async checkout() {
+    await this.checkoutBtn.click();
   }
 }

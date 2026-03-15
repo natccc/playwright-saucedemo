@@ -31,12 +31,16 @@ package.json
 
 ## Test Coverage
 
-| Page           | Status |
-| -------------- | ------ |
-| Login          | ✅     |
-| Inventory      | ✅     |
-| Product Detail | ✅     |
-| Cart           | ✅     |
+| Area             | Status |
+| ---------------- | ------ |
+| Login            | ✅     |
+| Inventory        | ✅     |
+| Product Detail   | ✅     |
+| Cart             | ✅     |
+| Checkout         | ✅     |
+| Menu             | ✅     |
+| Performance User | ✅     |
+| Problem User     | ✅     |
 
 ## CI/CD
 
@@ -66,7 +70,9 @@ npx playwright show-report
 ## What I'm Learning
 
 - Structuring tests using **Page Object Model** with a `BasePage` for shared components
-- Using **custom fixtures** to handle authenticated state across tests
+- Using **custom fixtures** to handle authenticated state and multi-step setup across tests
+- **Extending fixtures** to chain setup steps (e.g. logged in → cart filled → checkout → order confirmation) without repeating code in each test
+- Writing tests for **edge case user types** — problem user (broken UI behaviours) and performance glitch user (slow responses)
 - Writing maintainable, reusable test code in **TypeScript**
 - Setting up **CI pipelines** with GitHub Actions to run tests on every push
 - Enforcing code formatting with **Prettier** via Husky pre-commit hooks

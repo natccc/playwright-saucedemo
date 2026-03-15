@@ -1,6 +1,5 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import { BasePage } from "./base.page";
-import { PRODUCTS } from "../helpers/test-data";
 
 export class InventoryPage extends BasePage {
   readonly page: Page;
@@ -14,15 +13,16 @@ export class InventoryPage extends BasePage {
     this.sortDropdown = page.getByTestId("product-sort-container");
   }
 
-  async addToCartByIndex(index: number) {
+  async addFirstItemToCart() {
     await this.inventoryItems
-      .nth(index)
+      .first()
       .getByRole("button", { name: "Add to cart" })
       .click();
   }
-  async removeItemByIndex(index: number) {
+
+  async removeFromCartByName(name: string) {
     await this.inventoryItems
-      .nth(index)
+      .filter({ hasText: name })
       .getByRole("button", { name: "Remove" })
       .click();
   }
@@ -56,5 +56,12 @@ export class InventoryPage extends BasePage {
       .getByTestId("inventory-item-name")
       .filter({ hasText: name })
       .click();
+  }
+
+  async addAllItemsToCart() {
+    await expect(this.inventoryItems).toHaveCount(6);
+    for (const item of await this.inventoryItems.all()) {
+      await item.getByRole("button", { name: "Add to cart" }).click();
+    }
   }
 }
